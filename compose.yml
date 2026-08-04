@@ -8,7 +8,7 @@ services:
       # Proxy server
       - 8080:8080
       # Mitmweb interface
-      - 127.0.0.1:8081:8081
+      - 0.0.0.0:8081:8081
     volumes:
       - type: volume
         source: mitmproxy-pretendo-data
@@ -484,6 +484,25 @@ services:
     env_file:
       - ./environment/pikmin-3.env
       - ./environment/pikmin-3.local.env
+  
+  luigis-mansion-2:
+    build: ./repos/luigis-mansion-2
+    depends_on:
+      - account
+      - mongodb
+    restart: unless-stopped
+    ports:
+      - 127.0.0.1:2352:2345
+      - 6012:6012/udp
+      - 6013:6013/udp
+    networks:
+      internal:
+    dns: 172.20.0.200
+    env_file:
+      - ./environment/luigis-mansion-2.env
+      - ./environment/luigis-mansion-2.local.env
+
+
 
 volumes:
   mitmproxy-pretendo-data:
